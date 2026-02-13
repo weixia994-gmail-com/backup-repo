@@ -5,69 +5,44 @@
 - 防止意外数据丢失
 - 便于系统迁移和恢复
 
-## 2. 备份文件生成命令
+## 2. 备份文件详情
+- **文件名**: openclaw-backup-2026-02-13.tar.gz
+- **大小**: 192MB
+- **内容**: 包含 .openclaw 目录和 /workspaces/clawdbot 目录
+- **创建时间**: 2026-02-13
+
+## 3. 备份文件生成命令
 ```bash
-# 生成备份文件的完整命令
-tar -czf openclaw-backup-$(date +%Y-%m-%d).tar.gz -C /home/codespace/.openclaw .
-
-# 或者更完整的系统备份（包含工作区）
-tar -czf openclaw-backup-$(date +%Y-%m-%d).tar.gz \
-    -C /home/codespace/.openclaw . \
-    -C /home/codespace/.openclaw/workspace .
-
-# 最简命令（仅备份核心配置）
-cd /home/codespace && tar -czf openclaw-backup-$(date +%Y-%m-%d).tar.gz .openclaw
+# 在 Codespace 终端执行
+cd ~
+tar -czvf openclaw-backup-$(date +%F).tar.gz .openclaw /workspaces/clawdbot
 ```
 
-## 3. 备份内容
+## 4. 备份内容
 - `.openclaw` 目录下的所有配置文件
-- 认证信息和令牌
-- 工作空间数据
-- 日志文件
+  - 认证信息和令牌
+  - 模型配置
+  - 工作空间设置
+  - 历史记录和日志
+- `/workspaces/clawdbot` 目录
+  - 项目文件
+  - 自定义脚本
+  - 配置文件
 
-## 4. 推送到远程仓库
+## 5. 推送到远程仓库
 ```bash
-# 生成备份
-tar -czf openclaw-backup-$(date +%Y-%m-%d).tar.gz -C /home/codespace/.openclaw .
+# 将备份文件复制到仓库
+cp ~/openclaw-backup-2026-02-13.tar.gz /path/to/backup-repo/
 
-# 推送到备份仓库
-git push https://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@github.com/weixia994-gmail-com/backup-repo.git main
+# 提交到 GitHub
+cd /path/to/backup-repo
+git add openclaw-backup-2026-02-13.tar.gz
+git commit -m "Add OpenClaw backup (192MB)"
+git push
 ```
 
-## 5. 自动化脚本示例
-```bash
-#!/bin/bash
-# backup-openclaw.sh
-
-DATE=$(date +%Y-%m-%d)
-BACKUP_NAME="openclaw-backup-$DATE.tar.gz"
-
-echo "开始创建 OpenClaw 备份: $BACKUP_NAME"
-
-# 创建备份
-tar -czf $BACKUP_NAME -C /home/codespace/.openclaw .
-
-# 检查备份是否成功
-if [ $? -eq 0 ]; then
-    echo "备份创建成功: $BACKUP_NAME"
-    
-    # 可选：推送至远程仓库
-    # git push https://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@github.com/weixia994-gmail-com/backup-repo.git main
-    
-else
-    echo "备份创建失败!"
-    exit 1
-fi
-```
-
-## 6. 恢复备份
-```bash
-# 解压备份（请谨慎操作，会覆盖现有配置）
-tar -xzf openclaw-backup-YYYY-MM-DD.tar.gz -C /home/codespace/.openclaw
-```
-
-## 7. 最佳实践
+## 6. 最佳实践
 - 定期执行备份（建议每周一次）
 - 测试备份文件的完整性
-- 在推送前检查令牌安全性
 - 保留多个历史备份版本
+- 注意 GitHub 单文件 100MB 限制，此备份需使用 LFS
