@@ -23,8 +23,12 @@ def analyze_data(file_path: str) -> Dict[str, Any]:
             # Try different engines for Excel files
             try:
                 df = pd.read_excel(file_path, engine='openpyxl')
-            except Exception:
-                df = pd.read_excel(file_path, engine='xlrd')
+            except:
+                try:
+                    df = pd.read_excel(file_path, engine='xlrd')
+                except ImportError:
+                    # If xlrd is not available, try without specifying engine
+                    df = pd.read_excel(file_path)
         else:
             return {"error": f"Unsupported file type: {file_extension}. Supported types: .csv, .xlsx, .xls"}
         
