@@ -1,1 +1,1 @@
-Error analyzing file: Excel file format cannot be determined, you must specify an engine manually.
+Error analyzing file: `Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or conda to install the xlrd package.
