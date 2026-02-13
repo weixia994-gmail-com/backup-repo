@@ -7,6 +7,7 @@ Generates YouTube video scripts based on the analyzed data
 import pandas as pd
 import random
 import os
+import re
 from datetime import datetime
 
 def load_crush_data(excel_path):
@@ -14,6 +15,14 @@ def load_crush_data(excel_path):
     df = pd.read_excel(excel_path)
     df_clean = df.dropna(how='all')
     return df_clean
+
+def extract_clean_answer(answer_text):
+    """Extract clean answer text without the number prefix"""
+    if pd.isna(answer_text):
+        return "No answer provided"
+    # Remove leading numbers and periods (e.g., "1. ", "2. ", etc.)
+    clean_text = re.sub(r'^\d+\.\s*', '', str(answer_text)).strip()
+    return clean_text
 
 def generate_video_script(topic, answers):
     """Generate a video script based on a topic and its answers"""
@@ -113,7 +122,9 @@ def create_batch_videos(excel_path, num_videos=10, output_dir="./output"):
         for j in range(1, 6):  # Answers 1-5
             answer_col = f'答案{j}'
             if answer_col in df.columns and pd.notna(topic_row[answer_col]):
-                answers.append(topic_row[answer_col])
+                # Extract clean answer without the number prefix
+                clean_answer = extract_clean_answer(topic_row[answer_col])
+                answers.append(clean_answer)
             else:
                 answers.append(f"Answer {j} for {topic}")
         
