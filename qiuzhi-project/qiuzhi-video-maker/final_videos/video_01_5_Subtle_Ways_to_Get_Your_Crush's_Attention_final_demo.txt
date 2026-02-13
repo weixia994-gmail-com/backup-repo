@@ -1,0 +1,6 @@
+Video Production Plan:
+Topic: Video 1 5 Subtle Ways to Get Your Crush's Attention
+Background Image: /tmp/video_01_5_Subtle_Ways_to_Get_Your_Crush's_Attention_bg_image.png
+Background Music: /tmp/video_01_5_Subtle_Ways_to_Get_Your_Crush's_Attention_bg_music.wav
+Narration: ./output/video_01_5_Subtle_Ways_to_Get_Your_Crush's_Attention_detailed_audio.mp3
+Estimated Duration: 60s

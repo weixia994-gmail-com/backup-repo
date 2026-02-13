@@ -28,7 +28,12 @@ def create_basic_video_from_script(script_path, output_dir):
     # Clean the script for TTS
     clean_content = re.sub(r'#.*?\n', '', script_content)  # Remove headers
     clean_content = re.sub(r'\*.*?\*', '', clean_content)  # Remove formatting
-    clean_content = clean_content[:500]  # Limit length for testing
+    # Remove excessive text to avoid truncation mid-sentence
+    clean_content = clean_content[:800]  # Increase limit and ensure complete sentences
+    # Ensure we end at a sentence boundary if possible
+    last_period = clean_content.rfind('.', 0, 800)
+    if last_period > 0:
+        clean_content = clean_content[:last_period+1]
     
     print("Creating audio with gTTS...")
     # Create a temporary audio file
