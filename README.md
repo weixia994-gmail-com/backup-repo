@@ -1,6 +1,12 @@
 # VPS 备份仓库
 
-## VPS 列表
+## 备份列表
+
+### Clawdbot 5: github weixia994-gmail-com (AI 助手本体)
+- **目录**: `clawdbot5-github/`
+- **平台**: GitHub Codespaces
+- **备份**: 44MB (2026-02-26)
+- **内容**: OpenClaw 配置、技能、知识库、项目
 
 ### VPS1: Clawdbot 1 wujizhang hax us
 - **目录**: `vps1-clawdbot1-us/`
@@ -22,12 +28,15 @@
 .
 ├── README.md
 ├── RESTORE_GUIDE.md
-├── vps1-clawdbot1-us/
+├── clawdbot5-github/           # AI 助手本体备份
 │   ├── README.md
-│   └── vps-ipv6-backup-2026-02-26.tar.gz
-└── vps2-rdp-us/
+│   └── clawdbot5-backup-2026-02-26.tar.gz (44MB)
+├── vps1-clawdbot1-us/          # VPS1 备份
+│   ├── README.md
+│   └── vps-ipv6-backup-2026-02-26.tar.gz (445MB)
+└── vps2-rdp-us/                # VPS2 备份
     ├── README.md
-    └── vps2-ipv6-backup-2026-02-26.tar.gz
+    └── vps2-ipv6-backup-2026-02-26.tar.gz (1.4GB)
 ```
 
 ## 添加新备份
